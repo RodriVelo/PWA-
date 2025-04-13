@@ -1,12 +1,29 @@
-# React + Vite
+# Trabajo Practico React N°1
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Datos de la materia
+-**Materia**: Programacion Web Avanzada
 
-Currently, two official plugins are available:
+-**Profesores**:Lidia López, Agustín Chiarotto
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Descripcion
+Construir en React una aplicación que funcione como un gestor personal de películas y series.
+La aplicación debe permitir al usuario agregar nuevas películas o series, marcarlas como vistas, editarlas y eliminarlas (con confirmación). Cada ítem debe tener título, director, año, género (usar un select para este campo), rating y tipo (película o serie).
 
-## Expanding the ESLint configuration
+## Integrantes
+-**Rodrigo Velo**
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+-**Martin De La Iglesia**
+
+-**Enzo Ignacio Molina Beroiza**
+
+ 
+## Preguntas  
+-**Explicar la función de los siguientes archivos iniciales** 
+-**index.js:** Es el punto de entrada principal de la aplicación.Se encarga de renderizar el componente raíz (App) dentro del DOM.
+-**App.js:** Componente principal de la aplicación. Es el punto de inicio del árbol de componentes.
+-**index.css:** Archivo de estilos globales que se aplica a toda la aplicación. Se importa en index.js para que los estilos estén disponibles en todo el árbol de componentes.
+-**package-json:** Ayuda a definir qué bibliotecas son necesarias y cómo debe comportarse la aplicación durante el desarrollo, las pruebas y la producción. Ya que contiene toda la configuración del proyecto, incluyendo:
+Dependencias (como React, ReactDOM, etc.).
+Scripts para ejecutar tareas (start, build, test, etc.).
+Información del proyecto (nombre, versión, descripción).
+Configuraciones específicas (por ejemplo, de ESLint, Babel, etc.).
