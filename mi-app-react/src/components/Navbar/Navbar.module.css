@@ -18,7 +18,7 @@
 }
 
 .logo {
-	font-size: 32px;
+	font-size: 42px;
 	color: #fff;
 	font-weight: 700;
 }
@@ -30,25 +30,27 @@
 
 .nav a {
 	position: relative;
-	font-size: 18px;
+	font-size: 28px;
 	color: #fff;
 	font-weight: 500;
 	margin-left: 40px;
 }
-.searchForm{
-	position: relative;
-	color: #fff;
-	font-size: 222px;
-	border-radius: auto;
+
+
+.search {
+	color: #5b2427;
 }
 
 .searchForm {
+	position: relative;
+	color: #fff;
+	border-radius: auto;
 	display: flex;
 	align-items: center;
 	margin-left: 40px;
 }
 
-.searchButton {
+/* .searchButton {
 	background: #E50914;
 	color: #fff;
 	border: none;
@@ -61,16 +63,15 @@
 .searchButton:hover {
 	background: #b2070f;
 }
+ */
 
-.buttonText {
-	font-size: 16px;
-}
 
 a {
 	text-decoration: none;
 	color: white;
 }
 
+/* animacion abajo de las letras (.nav a) */
 .nav a::before {
 	content: '';
 	position: absolute;
