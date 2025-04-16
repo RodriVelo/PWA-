@@ -1,4 +1,4 @@
-const Title = ({ texto }) => {
-	return <h1> {texto} </h1>;
+const Title = ({ text }) => {
+  return <h1> {text} </h1>;
 };
 export default Title;
