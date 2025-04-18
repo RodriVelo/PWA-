@@ -1,6 +1,8 @@
-import styles from "./Button.module.css";
-import PropTypes from "prop-types";
+// Importaciones
+import PropTypes from "prop-types";    // Dependencias externas
+import styles from "./Button.module.css";  // Estilos locales
 
+// Componente Button
 const Button = ({ text, onClick }) => {
   return (
     <button onClick={onClick} className={styles.button}>
@@ -9,6 +11,7 @@ const Button = ({ text, onClick }) => {
   );
 };
 
+// Validación de Propiedades
 Button.propTypes = {
   text: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,

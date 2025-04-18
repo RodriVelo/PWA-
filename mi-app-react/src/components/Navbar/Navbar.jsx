@@ -1,25 +1,28 @@
+import { Search } from "lucide-react";
 import styles from "./Navbar.module.css";
 import Input from "../Input/Input.jsx";
 import Button from "../Button/Button.jsx";
-import { Search } from "lucide-react";
 
-const Navbar = () => {
+const Navbar = ({ cambiarEstadoFiltro}) => {
   return (
     <header className={styles.header}>
       <a href="#" className={styles.logo}>
         GesThor Mose
       </a>
       <nav className={styles.nav}>
-        <a href="#" /* target="_blank" */>Peliculas</a>
-        <a href="#" /* target="_blank" */>Series</a>
-        <a href="#" /* target="_blank" */>Vistas</a>
-        <a href="#" /* target="_blank" */>Por ver</a>
+        <Button text="Todos" onClick={() => { cambiarEstadoFiltro("todos"); cambiarFiltroVista("todas"); }} />
+        <Button text="Películas" onClick={() => cambiarEstadoFiltro("pelicula")} />
+        <Button text="Series" onClick={() => cambiarEstadoFiltro("serie")} />
+       
         <form className={styles.searchForm}>
           <Input />
-          <Button text={<Search className={styles.search} onClick="" />} />
+          <Button
+            text={<Search className={styles.search} onClick={() => {}} aria-label="Buscar" />}
+          />
         </form>
       </nav>
     </header>
   );
 };
+
 export default Navbar;
