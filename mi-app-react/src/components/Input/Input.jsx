@@ -1,6 +1,14 @@
 import styles from "./Input.module.css";
-const Input = () => {
-  return <input type="search" className={styles.input} placeholder="Buscar..." />;
+
+const Input = ({ onChange }) => {
+  return (
+    <input
+      type="search"
+      className={styles.searchInput}
+      placeholder="Buscar película o serie..."
+      onChange={onChange}
+    />
+  );
 };
 
 export default Input;

@@ -2,15 +2,18 @@ import Card from "./Card";
 import style from "./Card.module.css";
 import baseDeDatos from "../../assets/baseDeDatos";
 
-const Cards = ({ tipo, vista }) => {
+const Cards = ({ tipo, vista, busqueda }) => {
   const peliculasFiltradas = baseDeDatos.peliculas.filter((pelicula) => {
     const coincideTipo = tipo === "todos" || pelicula.tipo === tipo;
     const coincideVista =
       vista === "todas" ||
       (vista === "vistas" && pelicula.vista === true) ||
       (vista === "no-vistas" && pelicula.vista === false);
+    const coincideBusqueda = pelicula.nombre
+      .toLowerCase()
+      .includes((busqueda || "").toLowerCase());
 
-    return coincideTipo && coincideVista;
+    return coincideTipo && coincideVista && coincideBusqueda;
   });
 
   return (
