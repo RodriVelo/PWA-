@@ -15,9 +15,9 @@ const Cards = ({ tipo, vista }) => {
 
   return (
     <div className={style.container}>
-      <div className="row justify-content-center g-4">
+      <div className={style.row}>
         {peliculasFiltradas.map((pelicula) => (
-          <div className="col-sm-6 col-md-4 col-lg-2" key={pelicula.id}>
+          <div className={style.cardWrapper} key={pelicula.id}>
             <Card img={pelicula.img} nombre={pelicula.nombre} />
           </div>
         ))}

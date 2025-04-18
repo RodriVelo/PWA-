@@ -2,6 +2,7 @@ import { useState } from "react";
 import Navbar from "./components/Navbar/Navbar";
 import Cards from "./components/Card/Cards";
 import Button from "./components/Button/Button";
+import "./App.css"
 
 const App = () => {
   const [filtroTipo, setFiltroTipo] = useState("todos");
@@ -20,14 +21,14 @@ const App = () => {
       <Navbar
         cambiarEstadoFiltro={cambiarEstadoFiltro}
       />
-
-      
+      <div className="botonera">
+        <Button text="Vistas" onClick={() => cambiarFiltroVista("vistas")} />
+        <Button text="No vistas" onClick={() => cambiarFiltroVista("no-vistas")} />
+      </div>
+    
       <Cards tipo={filtroTipo} vista={filtroVista} />
 
-      {/* Nuevo: filtro por estado de vista */}
-      <Button text="Vistas" onClick={() => cambiarFiltroVista("vistas")} />
-      <Button text="No vistas" onClick={() => cambiarFiltroVista("no-vistas")} />
-
+      
     </div>
   );
 };

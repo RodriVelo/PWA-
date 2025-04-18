@@ -8,7 +8,7 @@ const baseDeDatos = {
       director: "Vince Gilligan",
       generos: [1, 2],
       calificacion: 7,
-      img: "https://occ-0-8407-92.1.nflxso.net/dnm/api/v6/Qs00mKCpRvrkl3HZAN5KwEL1kpE/AAAABb6h5K7kF5r1_x9RDFQ6lKLPfcAqtIIRDLoLbAj3Cl6_rPPA61zj31Wlq8KGanlfEX_CdBZl_XSh64f3VIDcX7YSI00-RGp4ifur.jpg?r=9ff",
+      img: "https://i.pinimg.com/1200x/37/62/75/37627587496965efcc0ae42ac9dff525.jpg",
       vista: true
     },
     {
@@ -30,7 +30,7 @@ const baseDeDatos = {
       director: "Martin Scorsese",
       generos: [1],
       calificacion: 9,
-      img: "https://pics.filmaffinity.com/El_lobo_de_Wall_Street-597158261-large.jpg",
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFYg6UhwLckSkt_yv55KqaRUEebVuNyHzS-A&s",
       vista: false
     },
     {
@@ -41,18 +41,18 @@ const baseDeDatos = {
       director: "Michael Bay",
       generos: [1],
       calificacion: 10,
-      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHemrEnvuRKbOpok0RFhdJrvNde_yPFI408A&s",
+      img: "https://media.themoviedb.org/t/p/w600_and_h900_bestv2/28YlCLrFhONteYSs9hKjD1Km0Cj.jpg",
       vista: false
     },
     {
       id: 5,
-      nombre: "Interestelar",
+      nombre: "Interstellar",
       anio: 2014,
       tipo: "pelicula",
       director: "Christopher Nolan",
       generos: [5],
       calificacion: 9,
-      img: "https://m.media-amazon.com/images/M/MV5BYzdjMDAxZGItMjI2My00ODA1LTlkNzItOWFjMDU5ZDJlYWY3XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+      img: "https://media.themoviedb.org/t/p/w600_and_h900_bestv2/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg",
       vista: true
     },
     {
@@ -63,7 +63,7 @@ const baseDeDatos = {
       director: "Álex Pina",
       generos: [1, 2],
       calificacion: 8,
-      img: "https://m.media-amazon.com/images/M/MV5BZDI0Zjk2NjMtOGRhMy00YzkyLWIwMzgtYmNiZDczM2IzOTAzXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+      img: "https://media.themoviedb.org/t/p/w600_and_h900_bestv2/reEMJA1uzscCbkpeRJeTT2bjqUp.jpg",
       vista: true
     },
     {
@@ -74,7 +74,7 @@ const baseDeDatos = {
       director: "Brad Bird",
       generos: [6, 3],
       calificacion: 9,
-      img: "https://images.justwatch.com/poster/77358335/s718/los-increibles.jpg",
+      img: "https://media.themoviedb.org/t/p/w600_and_h900_bestv2/2LqaLgk4Z226KkgPJuiOQ58wvrm.jpg",
       vista: true
     },
     {
@@ -107,7 +107,7 @@ const baseDeDatos = {
       director: "Luis Ortega",
       generos: [1, 2],
       calificacion: 9,
-      img: "https://es.web.img3.acsta.net/pictures/17/02/20/08/59/547853.jpg",
+      img: "https://media.themoviedb.org/t/p/w600_and_h900_bestv2/p1GFsUK5nCVHYNtjRxoGyfGdD9C.jpg",
       vista: true
     },
     {
@@ -118,7 +118,7 @@ const baseDeDatos = {
       director: "Anthony y Joe Russo",
       generos: [1, 7],
       calificacion: 9,
-      img: "https://es.web.img2.acsta.net/pictures/19/03/26/17/22/0896830.jpg",
+      img: "https://media.themoviedb.org/t/p/w600_and_h900_bestv2/ulzhLuWrPK07P1YkdWQLZnQh1JL.jpg",
       vista: true
     },
   ],

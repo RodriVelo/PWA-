@@ -6,12 +6,14 @@ import style from "./Card.module.css";  // Estilos locales
 const Card = ({ nombre, img }) => {
   return (
     <div className={style.card}>
+      <div className={style.cardWrapper}>
       <img src={img} alt={nombre} className={style.image} />
       {/* Si deseas agregar más contenido a la Card, descomenta la siguiente sección */}
       {/* <div className="card-body">
         <h4 className="card-title">{nombre}</h4>
         <p className="card-text">{rating}</p>
       </div> */}
+      </div>
     </div>
   );
 };
