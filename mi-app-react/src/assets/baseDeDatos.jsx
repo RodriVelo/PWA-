@@ -24,7 +24,7 @@ const baseDeDatos = {
     },
     {
       id: 3,
-      nombre: "The Wolf of Wall Street",
+      nombre: "El lobo de Wall Street",
       anio: 2013,
       tipo: "pelicula",
       director: "Martin Scorsese",

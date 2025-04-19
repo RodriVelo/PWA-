@@ -1,20 +1,18 @@
-// Importaciones
-import PropTypes from "prop-types";    // Dependencias externas
-import styles from "./Button.module.css";  // Estilos locales
+import PropTypes from "prop-types";
+import styles from "./Button.module.css";
 
-// Componente Button
-const Button = ({ text, onClick }) => {
+const Button = ({ text, onClick, className = "" }) => {
   return (
-    <button onClick={onClick} className={styles.button}>
+    <button onClick={onClick} className={`${styles.button} ${className}`}>
       {text}
     </button>
   );
 };
 
-// Validación de Propiedades
 Button.propTypes = {
   text: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
+  className: PropTypes.string, // <- importante agregar esto
 };
 
 export default Button;

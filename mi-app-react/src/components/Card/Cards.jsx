@@ -1,9 +1,9 @@
 import Card from "./Card";
 import style from "./Card.module.css";
-import baseDeDatos from "../../assets/baseDeDatos";
+// import baseDeDatos from "../../assets/baseDeDatos";
 
-const Cards = ({ tipo, vista, busqueda }) => {
-  const peliculasFiltradas = baseDeDatos.peliculas.filter((pelicula) => {
+const Cards = ({ tipo, vista, busqueda, datos }) => {
+  const peliculasFiltradas = datos.filter((pelicula) => {
     const coincideTipo = tipo === "todos" || pelicula.tipo === tipo;
     const coincideVista =
       vista === "todas" ||
