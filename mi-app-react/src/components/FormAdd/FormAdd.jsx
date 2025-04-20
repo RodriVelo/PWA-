@@ -1,56 +1,73 @@
-import { useState } from 'react';
-import baseDeDatos from '../../assets/baseDeDatos';
-import styles from './FormAdd.module.css';
+import { useState } from "react";
+import baseDeDatos from "../../assets/baseDeDatos";
+import styles from "./FormAdd.module.css";
 
 const FormAdd = ({ onGuardar }) => {
   const [formData, setFormData] = useState({
-    nombre: '',
-    anio: '',
-    tipo: 'pelicula',
-    director: '',
+    nombre: "",
+    anio: "",
+    tipo: "pelicula",
+    director: "",
     generos: [],
     calificacion: 1,
-    img: '',
+    img: "",
     vista: false,
   });
+
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
-    if (type === 'checkbox' && name === 'vista') {
+    if (type === "checkbox" && name === "vista") {
       setFormData({ ...formData, [name]: checked });
-    } else if (name === 'generos') {
+    } else if (name === "generos") {
       const valores = [...formData.generos];
       const idGenero = parseInt(value);
       if (valores.includes(idGenero)) {
-        setFormData({ ...formData, generos: valores.filter(g => g !== idGenero) });
+        setFormData({
+          ...formData,
+          generos: valores.filter((g) => g !== idGenero),
+        });
       } else {
         setFormData({ ...formData, generos: [...valores, idGenero] });
       }
-    } else if (name === 'vista') {
-      setFormData({ ...formData, vista: value === 'true' });
+    } else if (name === "vista") {
+      setFormData({ ...formData, vista: value === "true" });
     } else {
       setFormData({ ...formData, [name]: value });
+    }
+
+    // Limpiar mensaje de error cuando se escribe en el campo nombre
+    if (name === "nombre" && value.trim() !== "") {
+      setError("");
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Validación: el nombre no puede estar vacío
+    if (!formData.nombre.trim()) {
+      setError("El nombre no puede estar vacío");
+      return;
+    }
+
     const nuevaPeli = {
       ...formData,
       id: Date.now(),
       anio: parseInt(formData.anio),
-      calificacion: parseInt(formData.calificacion)
+      calificacion: parseInt(formData.calificacion),
     };
     onGuardar(nuevaPeli);
     setFormData({
-      nombre: '',
-      anio: '',
-      tipo: 'pelicula',
-      director: '',
+      nombre: "",
+      anio: "",
+      tipo: "pelicula",
+      director: "",
       generos: [],
       calificacion: 1,
-      img: '',
+      img: "",
       vista: false,
     });
   };
@@ -59,17 +76,48 @@ const FormAdd = ({ onGuardar }) => {
     <form className={styles.formContainer} onSubmit={handleSubmit}>
       <div className={styles.formGroup}>
         <label>Nombre:</label>
-        <input className={styles.input} type="text" name="nombre" value={formData.nombre} onChange={handleChange} placeholder="Nombre" />
+        <input
+          className={styles.input}
+          type="text"
+          name="nombre"
+          value={formData.nombre}
+          onChange={handleChange}
+          placeholder="Nombre"
+        />
+        {error && (
+          <p
+            style={{
+              color: "black",
+              fontSize: "16px",
+              marginTop: "3px",
+              marginLeft: "13%",
+            }}
+          >
+            {error}
+          </p>
+        )}
       </div>
 
       <div className={styles.formGroup}>
         <label>Año:</label>
-        <input className={styles.input} type="number" name="anio" value={formData.anio} onChange={handleChange} placeholder="Año de lanzamiento" />
+        <input
+          className={styles.input}
+          type="number"
+          name="anio"
+          value={formData.anio}
+          onChange={handleChange}
+          placeholder="Año de lanzamiento"
+        />
       </div>
 
       <div className={styles.formGroup}>
         <label>Tipo:</label>
-        <select className={styles.select} name="tipo" value={formData.tipo} onChange={handleChange}>
+        <select
+          className={styles.select}
+          name="tipo"
+          value={formData.tipo}
+          onChange={handleChange}
+        >
           <option value="pelicula">Película</option>
           <option value="serie">Serie</option>
         </select>
@@ -77,7 +125,14 @@ const FormAdd = ({ onGuardar }) => {
 
       <div className={styles.formGroup}>
         <label>Director:</label>
-        <input className={styles.input} type="text" name="director" value={formData.director} onChange={handleChange} placeholder="Nombre del director" />
+        <input
+          className={styles.input}
+          type="text"
+          name="director"
+          value={formData.director}
+          onChange={handleChange}
+          placeholder="Nombre del director"
+        />
       </div>
 
       <div className={styles.formGroup}>
@@ -101,23 +156,45 @@ const FormAdd = ({ onGuardar }) => {
 
       <div className={styles.formGroup}>
         <label>Calificación (1-10):</label>
-        <input className={styles.input} type="number" name="calificacion" value={formData.calificacion} onChange={handleChange} min="1" max="10" />
+        <input
+          className={styles.input}
+          type="number"
+          name="calificacion"
+          value={formData.calificacion}
+          onChange={handleChange}
+          min="1"
+          max="10"
+        />
       </div>
 
       <div className={styles.formGroup}>
         <label>Imagen:</label>
-        <input className={styles.input} type="text" name="img" value={formData.img} onChange={handleChange} placeholder="URL de la imagen" />
+        <input
+          className={styles.input}
+          type="text"
+          name="img"
+          value={formData.img}
+          onChange={handleChange}
+          placeholder="URL de la imagen"
+        />
       </div>
 
       <div className={styles.formGroup}>
         <label>Vista:</label>
-        <select className={styles.select} name="vista" value={formData.vista} onChange={handleChange}>
+        <select
+          className={styles.select}
+          name="vista"
+          value={formData.vista}
+          onChange={handleChange}
+        >
           <option value="true">Sí</option>
           <option value="false">No</option>
         </select>
       </div>
 
-      <button className={styles.submitButton} type="submit">Agregar Película</button>
+      <button className={styles.submitButton} type="submit">
+        Agregar
+      </button>
     </form>
   );
 };

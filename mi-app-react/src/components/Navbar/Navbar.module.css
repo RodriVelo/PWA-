@@ -77,12 +77,12 @@
  */
 
 
-a {
+/* a {
 	text-decoration: none;
 	color: white;
 }
 
-/* animacion abajo de las letras (.nav a) */
+
 .nav a::before {
 	content: '';
 	position: absolute;
@@ -96,4 +96,4 @@ a {
 
 .nav a:hover::before {
 	width: 100%;
-}
+} */

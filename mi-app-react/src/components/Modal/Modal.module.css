@@ -12,21 +12,26 @@
 }
 
 .closeButton {
-  border: 10px;
-  border-radius: 2px;
-  width: 40px;
-  height: 40px;
-  background-color: #e50914;
-  color: white;
-  font-size: 20px;
+  border: none;
+  border-radius: 4px;
+  width: 36px;
+  height: 32px;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  font-size: 18px;
   position: absolute;
-  top: 36px;
-  right: 520px;
+  top: 7px;
+  right: 10px;
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  z-index: 1010;
 }
 
 .closeButton:hover {
   background-color: #b81d24;
-	transform: scale(1.05);
+  transform: scale(1.05);
+}
+
+.modal {
+  position: relative;
 }

@@ -2,71 +2,93 @@ import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar/Navbar";
 import Cards from "./components/Card/Cards";
 import Button from "./components/Button/Button";
-import Modal from "./components/Modal/Modal"
+import Modal from "./components/Modal/Modal";
 import FormAdd from "./components/FormAdd/FormAdd";
-import baseDeDatos from "./assets/baseDeDatos"
+import baseDeDatos from "./assets/baseDeDatos";
 import "./App.css";
 
-
-
 const App = () => {
-
   useEffect(() => {
-    const datosGuardados = localStorage.getItem("peliculas")
-    if (datosGuardados){
-      setDatos(JSON.parse(datosGuardados))
+    const datosGuardados = localStorage.getItem("peliculas");
+    if (datosGuardados) {
+      setDatos(JSON.parse(datosGuardados));
     } else {
-      setDatos(baseDeDatos.peliculas)
+      setDatos(baseDeDatos.peliculas);
     }
-  }, [])
+  }, []);
 
   const [filtroTipo, setFiltroTipo] = useState("todos");
   const [filtroVista, setFiltroVista] = useState("todas");
   const [busqueda, setBusqueda] = useState("");
   const [datos, setDatos] = useState([]);
-  const [modalAbierto, setModalAbierto] = useState(false)
-  const [ordenarPor, setOrdenarPor] = useState("fecha")
- 
+  const [modalAbierto, setModalAbierto] = useState(false);
+  const [ordenarPor, setOrdenarPor] = useState("fecha");
+
   const cambiarEstadoFiltro = (tipo) => setFiltroTipo(tipo);
   const cambiarFiltroVista = (estado) => setFiltroVista(estado);
 
   const agregarPelicula = (nuevaPeli) => {
-    const peliculasConId = datos.filter(p => p.id !== undefined);
-    
-    const ultimoId = peliculasConId.length > 0 ? Math.max(...peliculasConId.map(p => p.id)) : 0;
+    const peliculasConId = datos.filter((p) => p.id !== undefined);
+
+    const ultimoId =
+      peliculasConId.length > 0
+        ? Math.max(...peliculasConId.map((p) => p.id))
+        : 0;
     const nuevaConId = { ...nuevaPeli, id: ultimoId + 1 };
-  
+
     // console.log("Último ID:", ultimoId);
     // console.log("Nueva película con ID:", nuevaConId);
-  
+
     const nuevasPeliculas = [...datos, nuevaConId];
     setDatos(nuevasPeliculas);
     localStorage.setItem("peliculas", JSON.stringify(nuevasPeliculas));
     setModalAbierto(false);
   };
-  
+
   const ordenarPeliculas = (peliculas, criterio) => {
     const [campo, orden] = criterio.split("-");
-  
+
     return [...peliculas].sort((a, b) => {
       if (campo === "fecha") {
         return orden === "asc" ? a.anio - b.anio : b.anio - a.anio;
       } else if (campo === "rating") {
-        return orden === "asc" ? a.calificacion - b.calificacion : b.calificacion - a.calificacion;
+        return orden === "asc"
+          ? a.calificacion - b.calificacion
+          : b.calificacion - a.calificacion;
       }
       return 0;
     });
   };
-  
 
-    const peliculasOrdenadas = ordenarPeliculas(datos, ordenarPor)
-  
+  // contadores
+  const totalItems = datos.length;
+  const itemsVistos = datos.filter((item) => item.vista === true).length;
+  const itemsPorVer = datos.filter((item) => item.vista === false).length;
+
+  const peliculasOrdenadas = ordenarPeliculas(datos, ordenarPor);
+
   return (
     <div className="App">
       <Navbar
         cambiarEstadoFiltro={cambiarEstadoFiltro}
-        setBusqueda={setBusqueda} 
+        setBusqueda={setBusqueda}
       />
+
+      <div className="contador-peliculas">
+        <div className="contador-item">
+          <span className="contador-numero">{totalItems}</span>
+          <span className="contador-texto">Total</span>
+        </div>
+        <div className="contador-item">
+          <span className="contador-numero">{itemsVistos}</span>
+          <span className="contador-texto">Vistas</span>
+        </div>
+        <div className="contador-item">
+          <span className="contador-numero">{itemsPorVer}</span>
+          <span className="contador-texto">Por ver</span>
+        </div>
+      </div>
+
       <div className="botonera">
         <Button text="Todas" onClick={() => cambiarFiltroVista("todas")} />
         <Button text="Vistas" onClick={() => cambiarFiltroVista("vistas")} />
@@ -75,20 +97,31 @@ const App = () => {
           onClick={() => cambiarFiltroVista("no-vistas")}
         />
         <label htmlFor="ordenar">Ordenar por:</label>
-        
-        <select className="ordenar" id="ordenar" onChange={(e) => setOrdenarPor(e.target.value)}>
+
+        <select
+          className="ordenar"
+          id="ordenar"
+          onChange={(e) => setOrdenarPor(e.target.value)}
+        >
           <option value="fecha-desc">Fecha: más reciente</option>
           <option value="fecha-asc">Fecha: más antigua</option>
           <option value="rating-desc">Rating: mayor a menor</option>
           <option value="rating-asc">Rating: menor a mayor</option>
         </select>
-
-
       </div>
-      
-      <Cards datos={peliculasOrdenadas} tipo={filtroTipo} vista={filtroVista} busqueda={busqueda} />
-      
-      <Button text="+" className="floating" onClick={() => setModalAbierto(true)}/>
+
+      <Cards
+        datos={peliculasOrdenadas}
+        tipo={filtroTipo}
+        vista={filtroVista}
+        busqueda={busqueda}
+      />
+
+      <Button
+        text="+"
+        className="floating"
+        onClick={() => setModalAbierto(true)}
+      />
       {modalAbierto && (
         <Modal cerrarModal={() => setModalAbierto(false)}>
           <FormAdd onGuardar={agregarPelicula} />
