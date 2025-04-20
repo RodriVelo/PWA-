@@ -59,7 +59,7 @@ const FormAdd = ({ onGuardar }) => {
     <form className={styles.formContainer} onSubmit={handleSubmit}>
       <div className={styles.formGroup}>
         <label>Nombre:</label>
-        <input className={styles.input} type="text" name="nombre" value={formData.nombre} onChange={handleChange} placeholder="Nombre de la película" />
+        <input className={styles.input} type="text" name="nombre" value={formData.nombre} onChange={handleChange} placeholder="Nombre" />
       </div>
 
       <div className={styles.formGroup}>

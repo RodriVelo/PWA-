@@ -41,6 +41,20 @@ html, body, #root{
 	transform: scale(1.05);
 }
 
+.ordenar {
+  margin: 1px 0;
+  background-color: #b81d24;
+  color: white;
+  border: none;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+}
+
+.ordenar label {
+  margin-right: 10px;
+}
+
 
 /* #root {
   max-width: 1280px;

@@ -7,7 +7,7 @@ const baseDeDatos = {
       tipo: "serie",
       director: "Vince Gilligan",
       generos: [1, 2],
-      calificacion: 7,
+      calificacion: 10,
       img: "https://i.pinimg.com/1200x/37/62/75/37627587496965efcc0ae42ac9dff525.jpg",
       vista: true
     },
@@ -18,7 +18,7 @@ const baseDeDatos = {
       tipo: "serie",
       director: "Peter Gould",
       generos: [2],
-      calificacion: 5,
+      calificacion: 10,
       img: "https://www.aceprensa.com/wp-content/uploads/2015/10/60059-1.jpg",
       vista: false
     },
@@ -46,7 +46,7 @@ const baseDeDatos = {
     },
     {
       id: 5,
-      nombre: "Interstellar",
+      nombre: "Interestellar",
       anio: 2014,
       tipo: "pelicula",
       director: "Christopher Nolan",
@@ -62,7 +62,7 @@ const baseDeDatos = {
       tipo: "serie",
       director: "Álex Pina",
       generos: [1, 2],
-      calificacion: 8,
+      calificacion: 2,
       img: "https://media.themoviedb.org/t/p/w600_and_h900_bestv2/reEMJA1uzscCbkpeRJeTT2bjqUp.jpg",
       vista: true
     },

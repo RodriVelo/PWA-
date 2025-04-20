@@ -11,26 +11,55 @@ import "./App.css";
 
 const App = () => {
 
-useEffect(() => {
-  setDatos(baseDeDatos.peliculas);
-}, []);
+  useEffect(() => {
+    const datosGuardados = localStorage.getItem("peliculas")
+    if (datosGuardados){
+      setDatos(JSON.parse(datosGuardados))
+    } else {
+      setDatos(baseDeDatos.peliculas)
+    }
+  }, [])
 
   const [filtroTipo, setFiltroTipo] = useState("todos");
   const [filtroVista, setFiltroVista] = useState("todas");
   const [busqueda, setBusqueda] = useState("");
   const [datos, setDatos] = useState([]);
   const [modalAbierto, setModalAbierto] = useState(false)
+  const [ordenarPor, setOrdenarPor] = useState("fecha")
  
   const cambiarEstadoFiltro = (tipo) => setFiltroTipo(tipo);
   const cambiarFiltroVista = (estado) => setFiltroVista(estado);
 
   const agregarPelicula = (nuevaPeli) => {
-    const id = datos.length + 1
-    const nuevaConId = {...nuevaPeli, id}
-    setDatos([...datos, nuevaConId]);
-    setModalAbierto(false)
-  }
+    const peliculasConId = datos.filter(p => p.id !== undefined);
+    
+    const ultimoId = peliculasConId.length > 0 ? Math.max(...peliculasConId.map(p => p.id)) : 0;
+    const nuevaConId = { ...nuevaPeli, id: ultimoId + 1 };
+  
+    // console.log("Último ID:", ultimoId);
+    // console.log("Nueva película con ID:", nuevaConId);
+  
+    const nuevasPeliculas = [...datos, nuevaConId];
+    setDatos(nuevasPeliculas);
+    localStorage.setItem("peliculas", JSON.stringify(nuevasPeliculas));
+    setModalAbierto(false);
+  };
+  
+  const ordenarPeliculas = (peliculas, criterio) => {
+    const [campo, orden] = criterio.split("-");
+  
+    return [...peliculas].sort((a, b) => {
+      if (campo === "fecha") {
+        return orden === "asc" ? a.anio - b.anio : b.anio - a.anio;
+      } else if (campo === "rating") {
+        return orden === "asc" ? a.calificacion - b.calificacion : b.calificacion - a.calificacion;
+      }
+      return 0;
+    });
+  };
+  
 
+    const peliculasOrdenadas = ordenarPeliculas(datos, ordenarPor)
   
   return (
     <div className="App">
@@ -45,8 +74,19 @@ useEffect(() => {
           text="No vistas"
           onClick={() => cambiarFiltroVista("no-vistas")}
         />
+        <label htmlFor="ordenar">Ordenar por:</label>
+        
+        <select className="ordenar" id="ordenar" onChange={(e) => setOrdenarPor(e.target.value)}>
+          <option value="fecha-desc">Fecha: más reciente</option>
+          <option value="fecha-asc">Fecha: más antigua</option>
+          <option value="rating-desc">Rating: mayor a menor</option>
+          <option value="rating-asc">Rating: menor a mayor</option>
+        </select>
+
+
       </div>
-      <Cards datos={datos} tipo={filtroTipo} vista={filtroVista} busqueda={busqueda} />
+      
+      <Cards datos={peliculasOrdenadas} tipo={filtroTipo} vista={filtroVista} busqueda={busqueda} />
       
       <Button text="+" className="floating" onClick={() => setModalAbierto(true)}/>
       {modalAbierto && (
