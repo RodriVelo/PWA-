@@ -20,27 +20,124 @@ body,
 	height: 100%;
 }
 
-.floating {
+.floatingButtons {
 	position: fixed;
 	bottom: 30px;
 	right: 30px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
 	z-index: 999;
-	font-size: 24px;
+}
+
+.floating {
 	width: 50px;
 	height: 50px;
-	padding: 0;
+	border-radius: 50%;
 	background-color: #e50914;
+	color: white;
+	font-size: 24px;
+	font-weight: bold;
 	border: none;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 	cursor: pointer;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+	transition: transform 0.2s, background-color 0.2s;
 }
 
 .floating:hover {
 	background-color: #b81d24;
 	transform: scale(1.05);
+}
+
+.floatingDelete {
+	background-color: #333;
+}
+
+.floatingDelete:hover {
+	background-color: #555;
+}
+
+.listaEliminar {
+	width: 450px;
+	max-height: 600px;
+	overflow-y: auto;
+	padding: 15px;
+	background-color: #141414;
+	border-radius: 5px;
+	color: white;
+}
+
+.listaEliminar h3 {
+	font-size: 18px;
+	margin-bottom: 15px;
+	text-align: center;
+	color: #e50914;
+}
+
+.listaEliminar ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.listaEliminar li {
+	margin-bottom: 10px;
+	border-bottom: 1px solid #333;
+	padding-bottom: 10px;
+}
+
+.itemPelicula {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.miniaturaEliminar {
+	width: 50px;
+	height: 50px;
+	object-fit: cover;
+	border-radius: 4px;
+	margin-right: 10px;
+}
+
+.btnEliminar {
+	background-color: #e50914;
+	color: white;
+	border: none;
+	padding: 5px 10px;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.confirmarEliminar {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+}
+
+.confirmarEliminar span {
+	font-size: 14px;
+}
+
+.btnSi, .btnNo {
+	padding: 3px 8px;
+	border: none;
+	border-radius: 3px;
+	cursor: pointer;
+	font-size: 12px;
+}
+
+.btnSi {
+	background-color: #e50914;
+	color: white;
+}
+
+.btnNo {
+	background-color: #333;
+	color: white;
 }
 
 .ordenar {

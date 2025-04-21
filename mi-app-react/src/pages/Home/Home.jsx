@@ -8,8 +8,7 @@ import Modal from "../../components/Modal/Modal";
 import FormAdd from "../../components/FormAdd/FormAdd";
 import baseDeDatos from "../../assets/baseDeDatos";
 
-
-function Home () {
+function Home() {
   useEffect(() => {
     const datosGuardados = localStorage.getItem("peliculas");
     if (datosGuardados) {
@@ -24,6 +23,7 @@ function Home () {
   const [busqueda, setBusqueda] = useState("");
   const [datos, setDatos] = useState([]);
   const [modalAbierto, setModalAbierto] = useState(false);
+  const [modalEliminarAbierto, setModalEliminarAbierto] = useState(false);
   const [ordenarPor, setOrdenarPor] = useState("fecha");
 
   const cambiarEstadoFiltro = (tipo) => setFiltroTipo(tipo);
@@ -45,6 +45,12 @@ function Home () {
     setDatos(nuevasPeliculas);
     localStorage.setItem("peliculas", JSON.stringify(nuevasPeliculas));
     setModalAbierto(false);
+  };
+
+  const eliminarPelicula = (id) => {
+    const peliculasActualizadas = datos.filter((pelicula) => pelicula.id !== id);
+    setDatos(peliculasActualizadas);
+    localStorage.setItem("peliculas", JSON.stringify(peliculasActualizadas));
   };
 
   const ordenarPeliculas = (peliculas, criterio) => {
@@ -119,18 +125,91 @@ function Home () {
         busqueda={busqueda}
       />
 
-      <Button
-        text="+"
-        className={styles.floating}
-        onClick={() => setModalAbierto(true)}
-      />
+      <div className={styles.floatingButtons}>
+        <Button
+          text="+"
+          className={styles.floating}
+          onClick={() => setModalAbierto(true)}
+        />
+        <Button
+          text="-"
+          className={`${styles.floating} ${styles.floatingDelete}`}
+          onClick={() => setModalEliminarAbierto(true)}
+        />
+      </div>
+
       {modalAbierto && (
         <Modal cerrarModal={() => setModalAbierto(false)}>
           <FormAdd onGuardar={agregarPelicula} />
         </Modal>
       )}
+
+      {modalEliminarAbierto && (
+        <Modal cerrarModal={() => setModalEliminarAbierto(false)}>
+          <ListaEliminar
+            peliculas={datos}
+            onEliminar={eliminarPelicula}
+            onClose={() => setModalEliminarAbierto(false)}
+          />
+        </Modal>
+      )}
     </div>
   );
 }
+
+// Componente para mostrar la lista de películas a eliminar
+const ListaEliminar = ({ peliculas, onEliminar, onClose }) => {
+  const [confirmarId, setConfirmarId] = useState(null);
+
+  const handleEliminar = (id) => {
+    onEliminar(id);
+    setConfirmarId(null);
+  };
+
+  return (
+    <div className={styles.listaEliminar}>
+      <h3>Seleccione una película para eliminar</h3>
+      <ul>
+        {peliculas.map((pelicula) => (
+          <li key={pelicula.id}>
+            <div className={styles.itemPelicula}>
+              <img
+                src={pelicula.img}
+                alt={pelicula.nombre}
+                className={styles.miniaturaEliminar}
+              />
+              <span>{pelicula.nombre}</span>
+
+              {confirmarId === pelicula.id ? (
+                <div className={styles.confirmarEliminar}>
+                  <span>¿Eliminar?</span>
+                  <button
+                    className={styles.btnSi}
+                    onClick={() => handleEliminar(pelicula.id)}
+                  >
+                    Sí
+                  </button>
+                  <button
+                    className={styles.btnNo}
+                    onClick={() => setConfirmarId(null)}
+                  >
+                    No
+                  </button>
+                </div>
+              ) : (
+                <button
+                  className={styles.btnEliminar}
+                  onClick={() => setConfirmarId(pelicula.id)}
+                >
+                  Eliminar
+                </button>
+              )}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 
 export default Home;
