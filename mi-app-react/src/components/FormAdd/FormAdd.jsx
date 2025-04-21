@@ -49,7 +49,7 @@ const FormAdd = ({ onGuardar }) => {
 
     // Validación: el nombre no puede estar vacío
     if (!formData.nombre.trim()) {
-      setError("El nombre no puede estar vacío");
+      setError("El nombre no puede estar vacio");
       return;
     }
 
@@ -118,7 +118,7 @@ const FormAdd = ({ onGuardar }) => {
           value={formData.tipo}
           onChange={handleChange}
         >
-          <option value="pelicula">Película</option>
+          <option value="pelicula">Pelicula</option>
           <option value="serie">Serie</option>
         </select>
       </div>
@@ -136,7 +136,7 @@ const FormAdd = ({ onGuardar }) => {
       </div>
 
       <div className={styles.formGroup}>
-        <label>Géneros:</label>
+        <label>Generos:</label>
         <div className={styles.checkboxGroup}>
           {baseDeDatos.generos.map((genero) => (
             <label key={genero.id}>

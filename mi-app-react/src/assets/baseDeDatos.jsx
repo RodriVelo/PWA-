@@ -60,7 +60,7 @@ const baseDeDatos = {
       nombre: "La Casa de Papel",
       anio: 2017,
       tipo: "serie",
-      director: "Álex Pina",
+      director: "Alex Pina",
       generos: [1, 2],
       calificacion: 2,
       img: "https://media.themoviedb.org/t/p/w600_and_h900_bestv2/reEMJA1uzscCbkpeRJeTT2bjqUp.jpg",
@@ -68,7 +68,7 @@ const baseDeDatos = {
     },
     {
       id: 7,
-      nombre: "Los Increíbles",
+      nombre: "Los Increibles",
       anio: 2004,
       tipo: "pelicula",
       director: "Brad Bird",
@@ -82,7 +82,7 @@ const baseDeDatos = {
       nombre: "El Secreto de Sus Ojos",
       anio: 2009,
       tipo: "pelicula",
-      director: "Juan José Campanella",
+      director: "Juan Jose Campanella",
       generos: [2, 1],
       calificacion: 10,
       img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBLo0rS2LhzeIS73YeMPtx3zOG8ApRo7cpdA&s",
@@ -124,12 +124,12 @@ const baseDeDatos = {
   ],
 
   generos: [
-    { id: 1, tipo: "Acción" },
+    { id: 1, tipo: "Accion" },
     { id: 2, tipo: "Drama" },
     { id: 3, tipo: "Comedia" },
     { id: 4, tipo: "Terror" },
-    { id: 5, tipo: "Ciencia Ficción" },
-    { id: 7, tipo: "Fantasía" },
+    { id: 5, tipo: "Ciencia Ficcion" },
+    { id: 7, tipo: "Fantasia" },
     { id: 6, tipo: "Aventura" },
     { id: 8, tipo: "Romance" }
   ],
