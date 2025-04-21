@@ -19,9 +19,13 @@ La aplicación debe permitir al usuario agregar nuevas películas o series, marc
  
 ## Preguntas  
 -**Explicar la función de los siguientes archivos iniciales** 
+
 -**index.js:** Es el punto de entrada principal de la aplicación.Se encarga de renderizar el componente raíz (App) dentro del DOM.
+
 -**App.js:** Componente principal de la aplicación. Es el punto de inicio del árbol de componentes.
+
 -**index.css:** Archivo de estilos globales que se aplica a toda la aplicación. Se importa en index.js para que los estilos estén disponibles en todo el árbol de componentes.
+
 -**package-json:** Ayuda a definir qué bibliotecas son necesarias y cómo debe comportarse la aplicación durante el desarrollo, las pruebas y la producción. Ya que contiene toda la configuración del proyecto, incluyendo:
 Dependencias (como React, ReactDOM, etc.).
 Scripts para ejecutar tareas (start, build, test, etc.).
