@@ -141,17 +141,20 @@ body,
 }
 
 .ordenar {
-	margin: 1px 0;
-	background-color: #b81d24;
+	margin: 1px ;
+	padding: 7px 7px 7px 7px;
+	background-color: #e50914;
 	color: white;
 	border: none;
 	border-radius: 2px;
 	display: flex;
 	align-items: center;
 }
-
+select{
+	height: 30px;
+}
 .ordenar label {
-	margin-right: 10px;
+	margin-right: 7px;
 }
 
 .contadorPeliculas {

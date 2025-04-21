@@ -1,14 +1,43 @@
+// Importaciones de React y hooks
 import { useEffect, useState } from "react";
+
+// Estilos
 import styles from "./Home.module.css";
 
+// Componentes
 import Navbar from "../../components/Navbar/Navbar";
 import Cards from "../../components/Card/Cards";
 import Button from "../../components/Button/Button";
 import Modal from "../../components/Modal/Modal";
 import FormAdd from "../../components/FormAdd/FormAdd";
+import Select from "../../components/Select/Select";
+
+// Base de datos local
 import baseDeDatos from "../../assets/baseDeDatos";
 
 function Home() {
+  // Estado principal de las películas
+  const [datos, setDatos] = useState([]);
+
+  // Filtros
+  const [filtroTipo, setFiltroTipo] = useState("todos");
+  const [filtroVista, setFiltroVista] = useState("todas");
+  const [filtroGenero, setFiltroGenero] = useState("todos");
+
+  // Búsqueda por nombre
+  const [busqueda, setBusqueda] = useState("");
+
+  // Control de modales
+  const [modalAbierto, setModalAbierto] = useState(false);
+  const [modalEliminarAbierto, setModalEliminarAbierto] = useState(false);
+
+  // Ordenamiento
+  const [ordenarPor, setOrdenarPor] = useState("fecha");
+
+  // Lista de géneros para el select
+  const arregloGeneros = baseDeDatos.generos;
+
+  // Cargar datos desde localStorage o baseDeDatos
   useEffect(() => {
     const datosGuardados = localStorage.getItem("peliculas");
     if (datosGuardados) {
@@ -18,28 +47,19 @@ function Home() {
     }
   }, []);
 
-  const [filtroTipo, setFiltroTipo] = useState("todos");
-  const [filtroVista, setFiltroVista] = useState("todas");
-  const [busqueda, setBusqueda] = useState("");
-  const [datos, setDatos] = useState([]);
-  const [modalAbierto, setModalAbierto] = useState(false);
-  const [modalEliminarAbierto, setModalEliminarAbierto] = useState(false);
-  const [ordenarPor, setOrdenarPor] = useState("fecha");
-
+  // Cambiar filtros
   const cambiarEstadoFiltro = (tipo) => setFiltroTipo(tipo);
   const cambiarFiltroVista = (estado) => setFiltroVista(estado);
+  const setFiltrarPor = (generoId) => setFiltroGenero(generoId);
 
+  // Agregar nueva película
   const agregarPelicula = (nuevaPeli) => {
     const peliculasConId = datos.filter((p) => p.id !== undefined);
-
     const ultimoId =
       peliculasConId.length > 0
         ? Math.max(...peliculasConId.map((p) => p.id))
         : 0;
     const nuevaConId = { ...nuevaPeli, id: ultimoId + 1 };
-
-    // console.log("Último ID:", ultimoId);
-    // console.log("Nueva película con ID:", nuevaConId);
 
     const nuevasPeliculas = [...datos, nuevaConId];
     setDatos(nuevasPeliculas);
@@ -47,12 +67,24 @@ function Home() {
     setModalAbierto(false);
   };
 
+  // Eliminar película por ID
   const eliminarPelicula = (id) => {
     const peliculasActualizadas = datos.filter((pelicula) => pelicula.id !== id);
     setDatos(peliculasActualizadas);
     localStorage.setItem("peliculas", JSON.stringify(peliculasActualizadas));
   };
 
+  // Editar película
+const editarPelicula = (peliculaEditada) => {
+  const peliculasActualizadas = datos.map((pelicula) =>
+    pelicula.id === peliculaEditada.id ? peliculaEditada : pelicula
+  );
+  setDatos(peliculasActualizadas);
+  localStorage.setItem("peliculas", JSON.stringify(peliculasActualizadas));
+};
+
+
+  // Ordenar películas por fecha o rating
   const ordenarPeliculas = (peliculas, criterio) => {
     const [campo, orden] = criterio.split("-");
 
@@ -68,20 +100,19 @@ function Home() {
     });
   };
 
-  // contadores
+  // Contadores
   const totalItems = datos.length;
   const itemsVistos = datos.filter((item) => item.vista === true).length;
   const itemsPorVer = datos.filter((item) => item.vista === false).length;
 
+  // Ordenar películas según el criterio actual
   const peliculasOrdenadas = ordenarPeliculas(datos, ordenarPor);
 
   return (
     <div className={styles.App}>
-      <Navbar
-        cambiarEstadoFiltro={cambiarEstadoFiltro}
-        setBusqueda={setBusqueda}
-      />
+      <Navbar cambiarEstadoFiltro={cambiarEstadoFiltro} setBusqueda={setBusqueda} />
 
+      {/* Contadores de películas */}
       <div className={styles.contadorPeliculas}>
         <div className={styles.contadorItem}>
           <span className={styles.contadorNumero}>{totalItems}</span>
@@ -97,34 +128,51 @@ function Home() {
         </div>
       </div>
 
+      {/* Filtros y ordenamientos */}
       <div className={styles.botonera}>
         <Button text="Todas" onClick={() => cambiarFiltroVista("todas")} />
         <Button text="Vistas" onClick={() => cambiarFiltroVista("vistas")} />
-        <Button
-          text="No vistas"
-          onClick={() => cambiarFiltroVista("no-vistas")}
-        />
-        <label htmlFor="ordenar">Ordenar por:</label>
+        <Button text="No vistas" onClick={() => cambiarFiltroVista("no-vistas")} />
 
-        <select
+        <Select 
+          label="Ordenar por"
           className={styles.ordenar}
-          id="ordenar"
+          arreglo={[
+            { value: "fecha-desc", text: "Fecha: más reciente" },
+            { value: "fecha-asc", text: "Fecha: más antigua" },
+            { value: "rating-desc", text: "Rating: mayor a menor" },
+            { value: "rating-asc", text: "Rating: menor a mayor" }
+          ]}
+          value={ordenarPor}
           onChange={(e) => setOrdenarPor(e.target.value)}
-        >
-          <option value="fecha-desc">Fecha: más reciente</option>
-          <option value="fecha-asc">Fecha: más antigua</option>
-          <option value="rating-desc">Rating: mayor a menor</option>
-          <option value="rating-asc">Rating: menor a mayor</option>
-        </select>
+          valorKey="value"
+          textoKey="text"
+        />
+
+        <Select
+          label="Género"
+          placeholder="Todos los géneros"
+          arreglo={arregloGeneros}
+          value={filtroGenero}
+          onChange={(e) => setFiltrarPor(e.target.value)}
+          className={styles.ordenar}
+          valorKey="id"
+          textoKey="tipo"
+        />
       </div>
 
+      {/* Renderizado de tarjetas */}
       <Cards
         datos={peliculasOrdenadas}
         tipo={filtroTipo}
         vista={filtroVista}
         busqueda={busqueda}
+        genero={filtroGenero} // Asegurate de usar esto en Cards si querés filtrar por género
+        editarPelicula={editarPelicula}
+
       />
 
+      {/* Botones flotantes */}
       <div className={styles.floatingButtons}>
         <Button
           text="+"
@@ -138,12 +186,14 @@ function Home() {
         />
       </div>
 
+      {/* Modal para agregar */}
       {modalAbierto && (
         <Modal cerrarModal={() => setModalAbierto(false)}>
           <FormAdd onGuardar={agregarPelicula} />
         </Modal>
       )}
 
+      {/* Modal para eliminar */}
       {modalEliminarAbierto && (
         <Modal cerrarModal={() => setModalEliminarAbierto(false)}>
           <ListaEliminar
@@ -154,10 +204,12 @@ function Home() {
         </Modal>
       )}
     </div>
+
+    
   );
 }
 
-// Componente para mostrar la lista de películas a eliminar
+// Componente para seleccionar y eliminar una película
 const ListaEliminar = ({ peliculas, onEliminar, onClose }) => {
   const [confirmarId, setConfirmarId] = useState(null);
 

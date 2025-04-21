@@ -1,23 +1,48 @@
-// Importaciones
+
 import PropTypes from "prop-types"; // Dependencias externas
 import style from "./Card.module.css"; // Estilos locales
+import Button from "../Button/Button";
 
 // Componente Card
-const Card = ({ nombre, img }) => {
+const Card = ({ pelicula, editarPelicula }) => {
   return (
     <div className={style.card}>
       <div className={style.cardWrapper}>
-        <img src={img} alt={nombre} className={style.image} />
-        <h6 className={style.cardTitle}>{nombre}</h6>
+        <img src={pelicula.img} alt={pelicula.nombre} className={style.image} />
+        <h5 className={style.cardTitle}>{pelicula.nombre}</h5>
+        <p>Año:{pelicula.anio}</p>
+        <p>Tipo:{pelicula.tipo}</p>
+        <p>Director:{pelicula.director}</p>
+        <p>Calificación:{pelicula.calificacion}/10</p>
+        <p>Estado:{pelicula.vista ? "✅ Vista" : "❌ No vista"}</p>
+        <Button
+  text="Edit"
+  onClick={() => {
+    const nuevoNombre = prompt("Nuevo nombre:", pelicula.nombre);
+    if (nuevoNombre && nuevoNombre !== pelicula.nombre) {
+      editarPelicula({ ...pelicula, nombre: nuevoNombre });
+    }
+  }}
+/>
       </div>
     </div>
   );
 };
 
+
 // Validación de Propiedades
 Card.propTypes = {
-  nombre: PropTypes.string.isRequired,
-  img: PropTypes.string.isRequired,
+  pelicula: PropTypes.shape({
+    id: PropTypes.number,
+    nombre: PropTypes.string.isRequired,
+    img: PropTypes.string.isRequired,
+    anio: PropTypes.number,
+    tipo: PropTypes.string,
+    director: PropTypes.string,
+    calificacion: PropTypes.number,
+    generos: PropTypes.arrayOf(PropTypes.number),
+    vista: PropTypes.bool
+  }).isRequired,
+  editarPelicula: PropTypes.func.isRequired
 };
-
 export default Card;
