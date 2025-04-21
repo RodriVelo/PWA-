@@ -12,10 +12,11 @@ const Cards = ({ tipo, vista, busqueda, datos }) => {
     const coincideBusqueda = pelicula.nombre
       .toLowerCase()
       .includes((busqueda || "").toLowerCase());
-
+    
+   /*  console.log(datos); */
     return coincideTipo && coincideVista && coincideBusqueda;
   });
-
+ /* console.log(peliculasFiltradas[1]); */
   return (
     <div className={style.container}>
       <div className={style.row}>
@@ -24,6 +25,10 @@ const Cards = ({ tipo, vista, busqueda, datos }) => {
             <Card img={pelicula.img} nombre={pelicula.nombre} />
           </div>
         ))}
+        {peliculasFiltradas.length === 0 && (
+          <div className={style.noResults}>No se encontraron resultados</div>
+        )}
+        {/* {console.log(peliculasFiltradas.length)} */}
       </div>
     </div>
   );

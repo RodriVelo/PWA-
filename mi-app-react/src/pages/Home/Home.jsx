@@ -74,7 +74,7 @@ function Home() {
   const itemsPorVer = datos.filter((item) => item.vista === false).length;
 
   const peliculasOrdenadas = ordenarPeliculas(datos, ordenarPor);
-
+  
   return (
     <div className={styles.App}>
       <Navbar

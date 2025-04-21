@@ -48,3 +48,15 @@
   transform: scale(1.05);
   transition: transform 0.3s;
 }
+
+.noResults {
+  color: white;
+  font-size: 30px;
+  text-align: center;
+  margin-top: 80px;
+  margin-left: 280%;
+  font-weight: bold;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
