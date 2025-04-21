@@ -3,7 +3,7 @@
 ## Datos de la materia
 -**Materia**: Programacion Web Avanzada
 
--**Profesores**:Lidia López, Agustín Chiarotto
+-**Profesores**: Lidia López, Agustín Chiarotto
 
 ## Descripcion
 Construir en React una aplicación que funcione como un gestor personal de películas y series.
@@ -16,7 +16,15 @@ La aplicación debe permitir al usuario agregar nuevas películas o series, marc
 
 -**Enzo Ignacio Molina Beroiza**
 
- 
+## Instrucciones de uso
+	1- Clonar el repositorio con el siguiente comando: git clone https://github.com/RodriVelo/PWA-
+
+	2- Para instalar las dependencias y poder ejecutarlo correctamente ingresar: npm install
+
+	3- Una vez instaladas, colocar: npm run dev
+
+	4- Por ultimo, copiar el link del apartado "Local" y pegarlo en el navegador. 
+
 ## Preguntas  
 -**Explicar la función de los siguientes archivos iniciales** 
 
