@@ -5,12 +5,12 @@
 }
 
 .header {
-	position: fixed;
+	position: absolute;
 	top: 0;
 	left: 0;
 	width: 100%;
-	padding: 20px 10%;
-	background-color: #7d0c1f;
+	padding: 20px 15%;
+	/* background-color: #7d0c1f; */
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
