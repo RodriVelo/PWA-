@@ -3,7 +3,7 @@ import style from "./Card.module.css";
 import Button from "../Button/Button";
 
 // Componente Card
-const Card = ({ pelicula, editarPelicula }) => {
+const Card = ({ pelicula, editarPelicula , setModal , setPeliculaSeleccionada }) => {
   // Función para cambiar el estado vista/no vista
   const cambiarEstadoVista = () => {
     editarPelicula({ ...pelicula, vista: !pelicula.vista });
@@ -24,10 +24,9 @@ const Card = ({ pelicula, editarPelicula }) => {
           <Button
             text="Editar"
             onClick={() => {
-              const nuevoNombre = prompt("Nuevo nombre:", pelicula.nombre);
-              if (nuevoNombre && nuevoNombre !== pelicula.nombre) {
-                editarPelicula({ ...pelicula, nombre: nuevoNombre });
-              }
+              setModal(true);
+              setPeliculaSeleccionada(pelicula);
+
             }}
           />
           <Button

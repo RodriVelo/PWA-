@@ -1,7 +1,5 @@
-// Importaciones de React y hooks
+// 📦 Importaciones
 import { useEffect, useState } from "react";
-
-// Estilos
 import styles from "./Home.module.css";
 
 // Componentes
@@ -12,43 +10,48 @@ import Modal from "../../components/Modal/Modal";
 import FormAdd from "../../components/FormAdd/FormAdd";
 import Select from "../../components/Select/Select";
 import Title from "../../components/Title/Title";
+import FormEdit from "../../components/FormEdit/FormEdit";
 
 // Base de datos local
 import baseDeDatos from "../../assets/baseDeDatos";
 
+// 📄 Constantes
+const arregloGeneros = [
+  { id: "todos", tipo: "Todos los generos" },
+  ...baseDeDatos.generos,
+];
+
 function Home() {
-  // Estado principal de las películas
+  // 🧠 Estados
+
+  // Películas
   const [datos, setDatos] = useState([]);
 
   // Filtros
   const [filtroTipo, setFiltroTipo] = useState("todos");
   const [filtroVista, setFiltroVista] = useState("todas");
   const [filtroGenero, setFiltroGenero] = useState("todos");
-
-  // Búsqueda por nombre
+  const [ordenarPor, setOrdenarPor] = useState("fecha");
   const [busqueda, setBusqueda] = useState("");
 
-  // Control de modales
+  // Modales
   const [modalAbierto, setModalAbierto] = useState(false);
   const [modalEliminarAbierto, setModalEliminarAbierto] = useState(false);
+  const [modalEditarPelicula, setModalEditarPelicula] = useState(false);
 
-  // Ordenamiento
-  const [ordenarPor, setOrdenarPor] = useState("fecha");
+  // Película seleccionada
+  const [peliculaSeleccionada, setPeliculaSeleccionada] = useState(null);
 
-  // Estado para el contador de películas y series filtradas por género
+  // Contador de películas y series
   const [contadorFiltroActual, setContadorFiltroActual] = useState({
     peliculas: 0,
     series: 0,
     total: 0,
   });
 
-  // Lista de géneros para el select
-  const arregloGeneros = [
-    { id: "todos", tipo: "Todos los generos" },
-    ...baseDeDatos.generos,
-  ];
+  // 🔁 useEffect
 
-  // Cargar datos desde localStorage o baseDeDatos
+  // Cargar películas desde LocalStorage o base
   useEffect(() => {
     const datosGuardados = localStorage.getItem("peliculas");
     if (datosGuardados) {
@@ -58,9 +61,8 @@ function Home() {
     }
   }, []);
 
-  // Actualizar contador al cargar datos
+  // Actualizar contador cuando cambian los datos
   useEffect(() => {
-    // Inicializar contador con todos los elementos
     setContadorFiltroActual({
       peliculas: datos.filter((item) => item.tipo === "pelicula").length,
       series: datos.filter((item) => item.tipo === "serie").length,
@@ -68,15 +70,16 @@ function Home() {
     });
   }, [datos]);
 
+  // ⚙️ Funciones //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   // Cambiar filtros
   const cambiarEstadoFiltro = (tipo) => setFiltroTipo(tipo);
   const cambiarFiltroVista = (estado) => setFiltroVista(estado);
 
-  // Función para actualizar el contador cuando cambia el género
+  // Actualizar contador según género
   const actualizarContadorGenero = (generoId) => {
     setFiltroGenero(generoId);
 
-    // Contar películas y series del género seleccionado
     if (generoId === "todos") {
       setContadorFiltroActual({
         peliculas: datos.filter((item) => item.tipo === "pelicula").length,
@@ -110,7 +113,7 @@ function Home() {
     setModalAbierto(false);
   };
 
-  // Eliminar película por ID
+  // Eliminar película
   const eliminarPelicula = (id) => {
     const peliculasActualizadas = datos.filter(
       (pelicula) => pelicula.id !== id
@@ -126,12 +129,12 @@ function Home() {
     );
     setDatos(peliculasActualizadas);
     localStorage.setItem("peliculas", JSON.stringify(peliculasActualizadas));
+    setModalEditarPelicula(false);
   };
 
-  // Ordenar películas por fecha o rating
+  // Ordenar películas
   const ordenarPeliculas = (peliculas, criterio) => {
     const [campo, orden] = criterio.split("-");
-
     return [...peliculas].sort((a, b) => {
       if (campo === "fecha") {
         return orden === "asc" ? a.anio - b.anio : b.anio - a.anio;
@@ -144,68 +147,84 @@ function Home() {
     });
   };
 
-  // Contadores
+  // 📊 Contadores generales
   const totalItems = datos.length;
   const itemsVistos = datos.filter((item) => item.vista === true).length;
   const itemsPorVer = datos.filter((item) => item.vista === false).length;
 
-  // Ordenar películas según el criterio actual
+  // 🎛️ Películas ordenadas
   const peliculasOrdenadas = ordenarPeliculas(datos, ordenarPor);
 
+  
+// 📦 Contador Componente
+const Contador = ({ titulo, valor }) => (
+  <div className={styles.contadorItem}>
+    <span className={styles.contadorNumero}>{valor}</span>
+    <span className={styles.contadorTexto}>{titulo}</span>
+  </div>
+);
+
+// 📦 ListaEliminar Componente
+const ListaEliminar = ({ peliculas, onEliminar, onClose }) => {
+  const [confirmarId, setConfirmarId] = useState(null);
+
+  const handleEliminar = (id) => {
+    onEliminar(id);
+    setConfirmarId(null);
+  };
+
+  return (
+    <div className={styles.listaEliminar}>
+      <h3>Seleccione una película para eliminar</h3>
+      <ul>
+        {peliculas.map((pelicula) => (
+          <li key={pelicula.id}>
+            <div className={styles.itemPelicula}>
+              <img src={pelicula.img} alt={pelicula.nombre} className={styles.miniaturaEliminar} />
+              <span>{pelicula.nombre}</span>
+              {confirmarId === pelicula.id ? (
+                <div className={styles.confirmarEliminar}>
+                  <span>¿Eliminar?</span>
+                  <button className={styles.btnSi} onClick={() => handleEliminar(pelicula.id)}>Sí</button>
+                  <button className={styles.btnNo} onClick={() => setConfirmarId(null)}>No</button>
+                </div>
+              ) : (
+                <button className={styles.btnEliminar} onClick={() => setConfirmarId(pelicula.id)}>Eliminar</button>
+              )}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+
+  // 📦 Render //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   return (
     <div className={styles.App}>
       <Title text="GesThor Mose" />
-      <Navbar
-        cambiarEstadoFiltro={cambiarEstadoFiltro}
-        setBusqueda={setBusqueda}
-      />
+      <Navbar cambiarEstadoFiltro={cambiarEstadoFiltro} setBusqueda={setBusqueda} />
 
-      {/* Contadores de películas */}
+      {/* Contadores */}
       <div className={styles.contadorPeliculas}>
-        <div className={styles.contadorItem}>
-          <span className={styles.contadorNumero}>{totalItems}</span>
-          <span className={styles.contadorTexto}>Total</span>
-        </div>
-        <div className={styles.contadorItem}>
-          <span className={styles.contadorNumero}>{itemsVistos}</span>
-          <span className={styles.contadorTexto}>Vistas</span>
-        </div>
-        <div className={styles.contadorItem}>
-          <span className={styles.contadorNumero}>{itemsPorVer}</span>
-          <span className={styles.contadorTexto}>Por ver</span>
-        </div>
+        <Contador titulo="Total" valor={totalItems} />
+        <Contador titulo="Vistas" valor={itemsVistos} />
+        <Contador titulo="Por ver" valor={itemsPorVer} />
         {filtroGenero !== "todos" && (
           <>
-            <div className={styles.contadorItem}>
-              <span className={styles.contadorNumero}>
-                {contadorFiltroActual.peliculas}
-              </span>
-              <span className={styles.contadorTexto}>Películas</span>
-            </div>
-            <div className={styles.contadorItem}>
-              <span className={styles.contadorNumero}>
-                {contadorFiltroActual.series}
-              </span>
-              <span className={styles.contadorTexto}>Series</span>
-            </div>
-            <div className={styles.contadorItem}>
-              <span className={styles.contadorNumero}>
-                {contadorFiltroActual.total}
-              </span>
-              <span className={styles.contadorTexto}>Total por género</span>
-            </div>
+            <Contador titulo="Películas" valor={contadorFiltroActual.peliculas} />
+            <Contador titulo="Series" valor={contadorFiltroActual.series} />
+            <Contador titulo="Total por género" valor={contadorFiltroActual.total} />
           </>
         )}
       </div>
 
-      {/* Filtros y ordenamientos */}
+      {/* Filtros */}
       <div className={styles.botonera}>
         <Button text="Todas" onClick={() => cambiarFiltroVista("todas")} />
         <Button text="Vistas" onClick={() => cambiarFiltroVista("vistas")} />
-        <Button
-          text="No vistas"
-          onClick={() => cambiarFiltroVista("no-vistas")}
-        />
+        <Button text="No vistas" onClick={() => cambiarFiltroVista("no-vistas")} />
 
         <Select
           label="Ordenar por"
@@ -233,38 +252,32 @@ function Home() {
         />
       </div>
 
-      {/* Renderizado de tarjetas */}
+      {/* Tarjetas */}
       <Cards
         datos={peliculasOrdenadas}
         tipo={filtroTipo}
         vista={filtroVista}
         busqueda={busqueda}
-        genero={filtroGenero} // Asegurate de usar esto en Cards si querés filtrar por género
+        genero={filtroGenero}
         editarPelicula={editarPelicula}
+        setModal={setModalEditarPelicula}
+        setPeliculaSeleccionada={(pelicula) => setPeliculaSeleccionada(pelicula)}
       />
 
       {/* Botones flotantes */}
       <div className={styles.floatingButtons}>
-        <Button
-          text="+"
-          className={styles.floating}
-          onClick={() => setModalAbierto(true)}
-        />
-        <Button
-          text="-"
-          className={`${styles.floating} ${styles.floatingDelete}`}
-          onClick={() => setModalEliminarAbierto(true)}
-        />
+        <Button text="+" className={styles.floating} onClick={() => setModalAbierto(true)} />
+        <Button text="-" className={`${styles.floating} ${styles.floatingDelete}`} onClick={() => setModalEliminarAbierto(true)} />
       </div>
 
-      {/* Modal para agregar */}
+      {/* Modal agregar */}
       {modalAbierto && (
         <Modal cerrarModal={() => setModalAbierto(false)}>
           <FormAdd onGuardar={agregarPelicula} />
         </Modal>
       )}
 
-      {/* Modal para eliminar */}
+      {/* Modal eliminar */}
       {modalEliminarAbierto && (
         <Modal cerrarModal={() => setModalEliminarAbierto(false)}>
           <ListaEliminar
@@ -274,63 +287,18 @@ function Home() {
           />
         </Modal>
       )}
+
+      {/* Modal editar */}
+      {modalEditarPelicula && (
+        <Modal cerrarModal={() => setModalEditarPelicula(false)}>
+          <FormEdit
+            alGuardarCambios={editarPelicula}
+            peliculaSeleccionada={peliculaSeleccionada}
+          />
+        </Modal>
+      )}
     </div>
   );
 }
-
-// Componente para seleccionar y eliminar una película
-const ListaEliminar = ({ peliculas, onEliminar, onClose }) => {
-  const [confirmarId, setConfirmarId] = useState(null);
-
-  const handleEliminar = (id) => {
-    onEliminar(id);
-    setConfirmarId(null);
-  };
-
-  return (
-    <div className={styles.listaEliminar}>
-      <h3>Seleccione una película para eliminar</h3>
-      <ul>
-        {peliculas.map((pelicula) => (
-          <li key={pelicula.id}>
-            <div className={styles.itemPelicula}>
-              <img
-                src={pelicula.img}
-                alt={pelicula.nombre}
-                className={styles.miniaturaEliminar}
-              />
-              <span>{pelicula.nombre}</span>
-
-              {confirmarId === pelicula.id ? (
-                <div className={styles.confirmarEliminar}>
-                  <span>¿Eliminar?</span>
-                  <button
-                    className={styles.btnSi}
-                    onClick={() => handleEliminar(pelicula.id)}
-                  >
-                    Sí
-                  </button>
-                  <button
-                    className={styles.btnNo}
-                    onClick={() => setConfirmarId(null)}
-                  >
-                    No
-                  </button>
-                </div>
-              ) : (
-                <button
-                  className={styles.btnEliminar}
-                  onClick={() => setConfirmarId(pelicula.id)}
-                >
-                  Eliminar
-                </button>
-              )}
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
 
 export default Home;

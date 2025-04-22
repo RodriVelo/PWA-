@@ -1,7 +1,7 @@
 import Card from "./Card";
 import style from "./Card.module.css";
 
-const Cards = ({ tipo, vista, busqueda, datos, genero, editarPelicula }) => {
+const Cards = ({ tipo, vista, busqueda, datos, genero, editarPelicula , setModal, setPeliculaSeleccionada}) => {
   const peliculasFiltradas = datos.filter((pelicula) => {
     const coincideTipo = tipo === "todos" || pelicula.tipo === tipo;
     const coincideVista =
@@ -26,7 +26,12 @@ const Cards = ({ tipo, vista, busqueda, datos, genero, editarPelicula }) => {
       <div className={style.row}>
         {peliculasFiltradas.map((pelicula) => (
           <div className={style.cardWrapper} key={pelicula.id}>
-            <Card pelicula={pelicula} editarPelicula={editarPelicula} />
+            <Card 
+              pelicula={pelicula} 
+              editarPelicula={editarPelicula} 
+              setModal = {setModal} 
+              setPeliculaSeleccionada={setPeliculaSeleccionada}
+            />
           </div>
         ))}
         {peliculasFiltradas.length === 0 && (
