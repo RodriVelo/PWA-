@@ -35,8 +35,11 @@ function Home() {
   const [ordenarPor, setOrdenarPor] = useState("fecha");
 
   // Lista de géneros para el select
-  const arregloGeneros = baseDeDatos.generos;
-
+  const arregloGeneros = [
+    {id: "todos", tipo: "Todos los generos"},
+    ...baseDeDatos.generos,
+  ]
+  
   // Cargar datos desde localStorage o baseDeDatos
   useEffect(() => {
     const datosGuardados = localStorage.getItem("peliculas");
@@ -151,7 +154,6 @@ const editarPelicula = (peliculaEditada) => {
 
         <Select
           label="Género"
-          placeholder="Todos los géneros"
           arreglo={arregloGeneros}
           value={filtroGenero}
           onChange={(e) => setFiltrarPor(e.target.value)}

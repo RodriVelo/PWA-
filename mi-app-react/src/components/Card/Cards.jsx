@@ -2,7 +2,7 @@ import Card from "./Card";
 import style from "./Card.module.css";
 // import baseDeDatos from "../../assets/baseDeDatos";
 
-const Cards = ({ tipo, vista, busqueda, datos , editarPelicula }) => {
+const Cards = ({ tipo, vista, busqueda, datos, genero, editarPelicula }) => {
   const peliculasFiltradas = datos.filter((pelicula) => {
     const coincideTipo = tipo === "todos" || pelicula.tipo === tipo;
     const coincideVista =
@@ -13,7 +13,10 @@ const Cards = ({ tipo, vista, busqueda, datos , editarPelicula }) => {
       .toLowerCase()
       .includes((busqueda || "").toLowerCase());
 
-    return coincideTipo && coincideVista && coincideBusqueda;
+    const coincideGenero = 
+    genero === "todos" || pelicula.generos.includes(parseInt(genero))
+    
+    return coincideTipo && coincideVista && coincideBusqueda && coincideGenero;
   });
 
   return (
