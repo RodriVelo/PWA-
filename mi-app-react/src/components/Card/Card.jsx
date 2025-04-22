@@ -1,10 +1,14 @@
-
 import PropTypes from "prop-types"; // Dependencias externas
-import style from "./Card.module.css"; // Estilos locales
+import style from "./Card.module.css"; 
 import Button from "../Button/Button";
 
 // Componente Card
 const Card = ({ pelicula, editarPelicula }) => {
+  // Función para cambiar el estado vista/no vista
+  const cambiarEstadoVista = () => {
+    editarPelicula({ ...pelicula, vista: !pelicula.vista });
+  };
+
   return (
     <div className={style.card}>
       <div className={style.cardWrapper}>
@@ -15,20 +19,27 @@ const Card = ({ pelicula, editarPelicula }) => {
         <p>Director:{pelicula.director}</p>
         <p>Calificación:{pelicula.calificacion}/10</p>
         <p>Estado:{pelicula.vista ? "✅ Vista" : "❌ No vista"}</p>
-        <Button
-  text="Edit"
-  onClick={() => {
-    const nuevoNombre = prompt("Nuevo nombre:", pelicula.nombre);
-    if (nuevoNombre && nuevoNombre !== pelicula.nombre) {
-      editarPelicula({ ...pelicula, nombre: nuevoNombre });
-    }
-  }}
-/>
+
+        <div className={style.cardButtons}>
+          <Button
+            text="Editar"
+            onClick={() => {
+              const nuevoNombre = prompt("Nuevo nombre:", pelicula.nombre);
+              if (nuevoNombre && nuevoNombre !== pelicula.nombre) {
+                editarPelicula({ ...pelicula, nombre: nuevoNombre });
+              }
+            }}
+          />
+          <Button
+            text={pelicula.vista ? "Marcar como no vista" : "Marcar como vista"}
+            onClick={cambiarEstadoVista}
+            className={pelicula.vista ? style.btnNoVista : style.btnVista}
+          />
+        </div>
       </div>
     </div>
   );
 };
-
 
 // Validación de Propiedades
 Card.propTypes = {
@@ -41,8 +52,8 @@ Card.propTypes = {
     director: PropTypes.string,
     calificacion: PropTypes.number,
     generos: PropTypes.arrayOf(PropTypes.number),
-    vista: PropTypes.bool
+    vista: PropTypes.bool,
   }).isRequired,
-  editarPelicula: PropTypes.func.isRequired
+  editarPelicula: PropTypes.func.isRequired,
 };
 export default Card;

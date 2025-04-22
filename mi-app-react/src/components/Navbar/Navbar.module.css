@@ -27,7 +27,7 @@
 .nav {
 	display: flex;
 	align-items: center;
-	
+	padding-left: 900px;
 }
 
 .nav a {

@@ -11,6 +11,7 @@ import Button from "../../components/Button/Button";
 import Modal from "../../components/Modal/Modal";
 import FormAdd from "../../components/FormAdd/FormAdd";
 import Select from "../../components/Select/Select";
+import Title from "../../components/Title/Title";
 
 // Base de datos local
 import baseDeDatos from "../../assets/baseDeDatos";
@@ -34,8 +35,18 @@ function Home() {
   // Ordenamiento
   const [ordenarPor, setOrdenarPor] = useState("fecha");
 
+  // Estado para el contador de películas y series filtradas por género
+  const [contadorFiltroActual, setContadorFiltroActual] = useState({
+    peliculas: 0,
+    series: 0,
+    total: 0,
+  });
+
   // Lista de géneros para el select
-  const arregloGeneros = baseDeDatos.generos;
+  const arregloGeneros = [
+    { id: "todos", tipo: "Todos los generos" },
+    ...baseDeDatos.generos,
+  ];
 
   // Cargar datos desde localStorage o baseDeDatos
   useEffect(() => {
@@ -47,10 +58,42 @@ function Home() {
     }
   }, []);
 
+  // Actualizar contador al cargar datos
+  useEffect(() => {
+    // Inicializar contador con todos los elementos
+    setContadorFiltroActual({
+      peliculas: datos.filter((item) => item.tipo === "pelicula").length,
+      series: datos.filter((item) => item.tipo === "serie").length,
+      total: datos.length,
+    });
+  }, [datos]);
+
   // Cambiar filtros
   const cambiarEstadoFiltro = (tipo) => setFiltroTipo(tipo);
   const cambiarFiltroVista = (estado) => setFiltroVista(estado);
-  const setFiltrarPor = (generoId) => setFiltroGenero(generoId);
+
+  // Función para actualizar el contador cuando cambia el género
+  const actualizarContadorGenero = (generoId) => {
+    setFiltroGenero(generoId);
+
+    // Contar películas y series del género seleccionado
+    if (generoId === "todos") {
+      setContadorFiltroActual({
+        peliculas: datos.filter((item) => item.tipo === "pelicula").length,
+        series: datos.filter((item) => item.tipo === "serie").length,
+        total: datos.length,
+      });
+    } else {
+      const filtrados = datos.filter((item) =>
+        item.generos.includes(parseInt(generoId))
+      );
+      setContadorFiltroActual({
+        peliculas: filtrados.filter((item) => item.tipo === "pelicula").length,
+        series: filtrados.filter((item) => item.tipo === "serie").length,
+        total: filtrados.length,
+      });
+    }
+  };
 
   // Agregar nueva película
   const agregarPelicula = (nuevaPeli) => {
@@ -69,20 +112,21 @@ function Home() {
 
   // Eliminar película por ID
   const eliminarPelicula = (id) => {
-    const peliculasActualizadas = datos.filter((pelicula) => pelicula.id !== id);
+    const peliculasActualizadas = datos.filter(
+      (pelicula) => pelicula.id !== id
+    );
     setDatos(peliculasActualizadas);
     localStorage.setItem("peliculas", JSON.stringify(peliculasActualizadas));
   };
 
   // Editar película
-const editarPelicula = (peliculaEditada) => {
-  const peliculasActualizadas = datos.map((pelicula) =>
-    pelicula.id === peliculaEditada.id ? peliculaEditada : pelicula
-  );
-  setDatos(peliculasActualizadas);
-  localStorage.setItem("peliculas", JSON.stringify(peliculasActualizadas));
-};
-
+  const editarPelicula = (peliculaEditada) => {
+    const peliculasActualizadas = datos.map((pelicula) =>
+      pelicula.id === peliculaEditada.id ? peliculaEditada : pelicula
+    );
+    setDatos(peliculasActualizadas);
+    localStorage.setItem("peliculas", JSON.stringify(peliculasActualizadas));
+  };
 
   // Ordenar películas por fecha o rating
   const ordenarPeliculas = (peliculas, criterio) => {
@@ -107,10 +151,14 @@ const editarPelicula = (peliculaEditada) => {
 
   // Ordenar películas según el criterio actual
   const peliculasOrdenadas = ordenarPeliculas(datos, ordenarPor);
-  
+
   return (
     <div className={styles.App}>
-      <Navbar cambiarEstadoFiltro={cambiarEstadoFiltro} setBusqueda={setBusqueda} />
+      <Title text="GesThor Mose" />
+      <Navbar
+        cambiarEstadoFiltro={cambiarEstadoFiltro}
+        setBusqueda={setBusqueda}
+      />
 
       {/* Contadores de películas */}
       <div className={styles.contadorPeliculas}>
@@ -126,22 +174,47 @@ const editarPelicula = (peliculaEditada) => {
           <span className={styles.contadorNumero}>{itemsPorVer}</span>
           <span className={styles.contadorTexto}>Por ver</span>
         </div>
+        {filtroGenero !== "todos" && (
+          <>
+            <div className={styles.contadorItem}>
+              <span className={styles.contadorNumero}>
+                {contadorFiltroActual.peliculas}
+              </span>
+              <span className={styles.contadorTexto}>Películas</span>
+            </div>
+            <div className={styles.contadorItem}>
+              <span className={styles.contadorNumero}>
+                {contadorFiltroActual.series}
+              </span>
+              <span className={styles.contadorTexto}>Series</span>
+            </div>
+            <div className={styles.contadorItem}>
+              <span className={styles.contadorNumero}>
+                {contadorFiltroActual.total}
+              </span>
+              <span className={styles.contadorTexto}>Total por género</span>
+            </div>
+          </>
+        )}
       </div>
 
       {/* Filtros y ordenamientos */}
       <div className={styles.botonera}>
         <Button text="Todas" onClick={() => cambiarFiltroVista("todas")} />
         <Button text="Vistas" onClick={() => cambiarFiltroVista("vistas")} />
-        <Button text="No vistas" onClick={() => cambiarFiltroVista("no-vistas")} />
+        <Button
+          text="No vistas"
+          onClick={() => cambiarFiltroVista("no-vistas")}
+        />
 
-        <Select 
+        <Select
           label="Ordenar por"
           className={styles.ordenar}
           arreglo={[
             { value: "fecha-desc", text: "Fecha: más reciente" },
             { value: "fecha-asc", text: "Fecha: más antigua" },
             { value: "rating-desc", text: "Rating: mayor a menor" },
-            { value: "rating-asc", text: "Rating: menor a mayor" }
+            { value: "rating-asc", text: "Rating: menor a mayor" },
           ]}
           value={ordenarPor}
           onChange={(e) => setOrdenarPor(e.target.value)}
@@ -151,10 +224,9 @@ const editarPelicula = (peliculaEditada) => {
 
         <Select
           label="Género"
-          placeholder="Todos los géneros"
           arreglo={arregloGeneros}
           value={filtroGenero}
-          onChange={(e) => setFiltrarPor(e.target.value)}
+          onChange={(e) => actualizarContadorGenero(e.target.value)}
           className={styles.ordenar}
           valorKey="id"
           textoKey="tipo"
@@ -169,7 +241,6 @@ const editarPelicula = (peliculaEditada) => {
         busqueda={busqueda}
         genero={filtroGenero} // Asegurate de usar esto en Cards si querés filtrar por género
         editarPelicula={editarPelicula}
-
       />
 
       {/* Botones flotantes */}
@@ -204,8 +275,6 @@ const editarPelicula = (peliculaEditada) => {
         </Modal>
       )}
     </div>
-
-    
   );
 }
 

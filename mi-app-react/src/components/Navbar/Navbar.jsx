@@ -6,9 +6,6 @@ import Button from "../Button/Button.jsx";
 const Navbar = ({ cambiarEstadoFiltro, setBusqueda }) => {
   return (
     <header className={styles.header}>
-      <a href="#" className={styles.logo}>
-        GesThor Mose
-      </a>
       <nav className={styles.nav}>
         <Button
           text="Todos"

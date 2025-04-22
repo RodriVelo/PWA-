@@ -1,20 +1,24 @@
 import Card from "./Card";
 import style from "./Card.module.css";
-// import baseDeDatos from "../../assets/baseDeDatos";
 
-const Cards = ({ tipo, vista, busqueda, datos , editarPelicula }) => {
+const Cards = ({ tipo, vista, busqueda, datos, genero, editarPelicula }) => {
   const peliculasFiltradas = datos.filter((pelicula) => {
     const coincideTipo = tipo === "todos" || pelicula.tipo === tipo;
     const coincideVista =
       vista === "todas" ||
       (vista === "vistas" && pelicula.vista === true) ||
       (vista === "no-vistas" && pelicula.vista === false);
-    const coincideBusqueda = pelicula.nombre
-      .toLowerCase()
-      .includes((busqueda || "").toLowerCase());
+      
+    //busca nombre y director
+    const textoBusqueda = (busqueda || "").toLowerCase();
+    const coincideBusqueda = 
+      pelicula.nombre.toLowerCase().includes(textoBusqueda) ||
+      pelicula.director.toLowerCase().includes(textoBusqueda);
+
+    const coincideGenero = 
+    genero === "todos" || pelicula.generos.includes(parseInt(genero))
     
-   /*  console.log(datos); */
-    return coincideTipo && coincideVista && coincideBusqueda;
+    return coincideTipo && coincideVista && coincideBusqueda && coincideGenero;
   });
  /* console.log(peliculasFiltradas[1]); */
   return (
