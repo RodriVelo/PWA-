@@ -218,9 +218,9 @@ const ListaEliminar = ({ peliculas, onEliminar, onClose }) => {
           <Contador titulo="Por ver" valor={itemsPorVer} />
           {filtroGenero !== "todos" && (
             <>
+              <Contador titulo="Total por género" valor={contadorFiltroActual.total} />
               <Contador titulo="Películas" valor={contadorFiltroActual.peliculas} />
               <Contador titulo="Series" valor={contadorFiltroActual.series} />
-              <Contador titulo="Total por género" valor={contadorFiltroActual.total} />
             </>
           )}
        </div>
