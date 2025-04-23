@@ -1,10 +1,24 @@
-import PropTypes from "prop-types"; 
+import PropTypes from "prop-types";
+import styles from "./Select.module.css";
 
-const Select = ({ label, placeholder, arreglo, value, onChange, className, valorKey, textoKey }) => {
+const Select = ({
+  label,
+  placeholder,
+  arreglo,
+  value,
+  onChange,
+  className = "",
+  valorKey,
+  textoKey,
+}) => {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }} className={className}>
-      <label>{label}</label>
-      <select onChange={onChange} value={value}>
+    <div className={`${styles.selectContainer} ${className}`}>
+      {label && <label>{label}</label>}
+      <select
+        onChange={onChange}
+        value={value}
+        className={styles.select}
+      >
         {placeholder && <option value="">{placeholder}</option>}
         {arreglo.map((opcion, index) => (
           <option key={index} value={valorKey ? opcion[valorKey] : opcion}>
@@ -26,6 +40,5 @@ Select.propTypes = {
   valorKey: PropTypes.string,
   textoKey: PropTypes.string,
 };
-
 
 export default Select;

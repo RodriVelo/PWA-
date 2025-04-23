@@ -1,18 +1,30 @@
-.botonera {
-	position: static;
-	top: 100px;
-	padding: 10px 0 0 0;
+.headerHome {
+	background-color: #333;
 	display: flex;
-	gap: 10px;
-	z-index: 50;
-}
-
-.App {
+	align-items: center;
+	justify-content: space-between;
+	padding: 20px;
+  }
+  
+  .App {
 	min-height: 100vh;
 	background: rgb(29, 2, 2);
 	color: white;
 	overflow-y: auto;
-}
+  }
+  
+  .botonera {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	justify-content: center;
+	align-items: center;
+	margin: 20px auto;
+	padding: 10px 20px;
+	background-color: #1f1f1f;
+	border-radius: 10px;
+  }
+  
 
 html,
 body,
@@ -141,51 +153,50 @@ body,
 }
 
 .ordenar {
-	margin: 1px ;
-	padding: 7px 7px 7px 7px;
-	background-color: #e50914;
-	color: white;
-	border: none;
-	border-radius: 2px;
 	display: flex;
 	align-items: center;
-}
-select{
-	height: 30px;
-}
-.ordenar label {
-	margin-right: 7px;
-}
+	gap: 6px;
+	background-color: #292929;
+	padding: 6px 10px;
+	border-radius: 6px;
+	color: white;
+	font-size: 14px;
+  }
 
+.ordenar label {
+	font-weight: 500;
+	font-size: 14px;
+	margin-right: 4px;
+}
 .contadorPeliculas {
 	display: flex;
 	justify-content: center;
+	flex-wrap: wrap;
 	gap: 30px;
-	margin: 80px auto 20px auto;
-	padding: 15px;
-	background-color: rgb(29, 2, 2);
-	border-radius: 8px;
-	box-shadow: 0 2px 8px #b81d24;
-	max-width: 800px;
+	margin: 30px auto;
+	padding: 10px 20px;
+	background-color: #1f1f1f;
+	border-radius: 10px;
+	box-shadow: 0 2px 8px rgba(255, 0, 0, 0.3);
+	max-width: 700px;
 	position: relative;
-}
-
-.contadorItem {
+  }
+  
+  .contadorItem {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	min-width: 80px;
-	margin-top: 15px;
-}
-
-.contadorNumero {
-	font-size: 28px;
+	min-width: 70px;
+  }
+  
+  .contadorNumero {
+	font-size: 24px;
 	font-weight: bold;
 	color: #e50914;
-}
-
-.contadorTexto {
-	font-size: 16px;
+  }
+  
+  .contadorTexto {
+	font-size: 14px;
 	color: #fff;
-	margin-top: 5px;
-}
+	margin-top: 2px;
+  }

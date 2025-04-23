@@ -1,0 +1,30 @@
+.select {
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    background-color: #fff;
+    color: #333;
+    font-size: 14px;
+    min-width: 150px;
+  }
+  
+  .selectContainer {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .selectContainer:hover {
+    background-color: #353535;
+  }
+  
+  .selectLabel {
+    margin-right: 4px;
+    white-space: nowrap;
+  }
+  
+  
+  .select:hover {
+    background-color: #f1f1f1;
+  }
+  

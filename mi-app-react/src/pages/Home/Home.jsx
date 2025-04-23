@@ -203,22 +203,27 @@ const ListaEliminar = ({ peliculas, onEliminar, onClose }) => {
   // 📦 Render //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   return (
     <div className={styles.App}>
-      <Title text="GesThor Mose" />
-      <Navbar cambiarEstadoFiltro={cambiarEstadoFiltro} setBusqueda={setBusqueda} />
 
+      <div className={styles.headerHome}>
+
+          <Title text="GesThor Mose" />
+          <Navbar cambiarEstadoFiltro={cambiarEstadoFiltro} setBusqueda={setBusqueda} />
+
+      </div>
+      
       {/* Contadores */}
       <div className={styles.contadorPeliculas}>
-        <Contador titulo="Total" valor={totalItems} />
-        <Contador titulo="Vistas" valor={itemsVistos} />
-        <Contador titulo="Por ver" valor={itemsPorVer} />
-        {filtroGenero !== "todos" && (
-          <>
-            <Contador titulo="Películas" valor={contadorFiltroActual.peliculas} />
-            <Contador titulo="Series" valor={contadorFiltroActual.series} />
-            <Contador titulo="Total por género" valor={contadorFiltroActual.total} />
-          </>
-        )}
-      </div>
+          <Contador titulo="Total" valor={totalItems} />
+          <Contador titulo="Vistas" valor={itemsVistos} />
+          <Contador titulo="Por ver" valor={itemsPorVer} />
+          {filtroGenero !== "todos" && (
+            <>
+              <Contador titulo="Películas" valor={contadorFiltroActual.peliculas} />
+              <Contador titulo="Series" valor={contadorFiltroActual.series} />
+              <Contador titulo="Total por género" valor={contadorFiltroActual.total} />
+            </>
+          )}
+       </div>
 
       {/* Filtros */}
       <div className={styles.botonera}>
@@ -249,6 +254,7 @@ const ListaEliminar = ({ peliculas, onEliminar, onClose }) => {
           className={styles.ordenar}
           valorKey="id"
           textoKey="tipo"
+          
         />
       </div>
 
