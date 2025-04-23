@@ -11,6 +11,7 @@ import FormAdd from "../../components/FormAdd/FormAdd";
 import Select from "../../components/Select/Select";
 import Title from "../../components/Title/Title";
 import FormEdit from "../../components/FormEdit/FormEdit";
+import Contador from "../../components/Contador/Contador";
 
 // Base de datos local
 import baseDeDatos from "../../assets/baseDeDatos";
@@ -155,14 +156,6 @@ function Home() {
   // 🎛️ Películas ordenadas
   const peliculasOrdenadas = ordenarPeliculas(datos, ordenarPor);
 
-  
-// 📦 Contador Componente
-const Contador = ({ titulo, valor }) => (
-  <div className={styles.contadorItem}>
-    <span className={styles.contadorNumero}>{valor}</span>
-    <span className={styles.contadorTexto}>{titulo}</span>
-  </div>
-);
 
 // 📦 ListaEliminar Componente
 const ListaEliminar = ({ peliculas, onEliminar, onClose }) => {

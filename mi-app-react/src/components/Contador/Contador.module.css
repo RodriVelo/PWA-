@@ -1,0 +1,19 @@
+
+.contadorItem {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	min-width: 70px;
+  }
+  
+  .contadorNumero {
+	font-size: 24px;
+	font-weight: bold;
+	color: #e50914;
+  }
+  
+  .contadorTexto {
+	font-size: 14px;
+	color: #fff;
+	margin-top: 2px;
+  }
