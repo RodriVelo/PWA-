@@ -20,6 +20,7 @@ const Navbar = ({ cambiarEstadoFiltro, setBusqueda }) => {
         />
         <Button text="Series" onClick={() => cambiarEstadoFiltro("serie")} />
 
+{/* Para que un form aca? si ademas el on submit no hace nada? */}
         <form
           className={styles.searchForm}
           onSubmit={(e) => e.preventDefault()}
