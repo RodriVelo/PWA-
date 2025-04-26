@@ -1,4 +1,23 @@
+Correcciones:
+
+- excelente estructura general del proyecto
+- CRUD completo (agregar, editar, eliminar) implementado de forma clara y modular
+- persistencia efectiva con localStorage
+- diseño visual limpio y coherente, uso efectivo de CSS Modules
+- navegación clara y componentes bien encapsulados: Cards, FormAdd, FormEdit, Contador, Select, Modal
+- interfaz intuitiva con modales flotantes y botones de acción bien definidos
+- FormAdd es completo, validado y permite múltiples géneros
+
+
+Observaciones:
+- No hacen falta tantos comentarios, menos aun con iconos.
+- El codigo les quedo dentro de una carpeta que se llama mi-app-react.
+- El editar Peliculas/series deberia ser un option tmb. Puedo poner cualquier cosa.
+
+Nota: 10.
+
 # ✨ **GesThor Mose - Gestor de Películas y Series**
+
 
 ![Banner](https://img.shields.io/badge/React-PWA-red?style=for-the-badge&logo=react)
 
@@ -95,7 +114,7 @@ _Aplicación web moderna construida con React que funciona como un gestor person
 ### Pasos detallados
 1. **Clona el repositorio**:  
    ```bash
-   git clone https://github.com/RodriVelo/PWA-
+   git clone https://github.com/RodriVelo/PWA- //Creo que este link no funciona, revisar.
    cd PWA-/mi-app-react
    ```
 
@@ -139,7 +158,8 @@ _Aplicación web moderna construida con React que funciona como un gestor person
 
 - **index.css:** Archivo de estilos globales que se aplica a toda la aplicación. Se importa en index.js para que los estilos estén disponibles en todo el árbol de componentes.
 
-- **package-json:** Ayuda a definir qué bibliotecas son necesarias y cómo debe comportarse la aplicación durante el desarrollo, las pruebas y la producción. Ya que contiene toda la configuración del proyecto, incluyendo:
+- **package-json:** Ayuda a definir qué bibliotecas son necesarias y cómo debe comportarse la aplicación durante el desarrollo, las pruebas y la producción. Ya que contiene toda la configuración del proyecto, incluyendo: 
+//OJO no es package-json --> package.json sin -
 Dependencias (como React, ReactDOM, etc.).
 Scripts para ejecutar tareas (start, build, test, etc.).
 Información del proyecto (nombre, versión, descripción).

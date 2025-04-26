@@ -135,6 +135,7 @@ function Home() {
 
   // Ordenar películas
   const ordenarPeliculas = (peliculas, criterio) => {
+    //es necesario el split?
     const [campo, orden] = criterio.split("-");
     return [...peliculas].sort((a, b) => {
       if (campo === "fecha") {
